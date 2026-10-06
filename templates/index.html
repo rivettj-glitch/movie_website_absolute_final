@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <title>Movie Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
-    <h1>Movies</h1>
+
+    <nav>
+        <div class="logo">Movie Scout</div>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/favourites">Favourites</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+    <h1><strong>Welcome to Movie Scout!</strong></h1>
+
+    <p>Your next <em>great</em> movie is just a search away!<br></p>
+        
+    <p>Discover movies, explore genres, and find something <em>perfect</em> for your next watch. Whether you know exactly what you're looking for or just want to browse, <strong>Movie Scout</strong> is here to help you find your next favourite file.<br></p>
+
+    <p>Ready to scout your next watch?</p>
+    
+
     <table>
         <tr>
             <th>ID</th>
@@ -27,5 +46,6 @@
         </tr>
         {% endfor %}
     </table>
+
 </body>
 </html>

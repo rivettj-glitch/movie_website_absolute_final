@@ -15,5 +15,17 @@ def home():
     db.close()
     return render_template("index.html", movies=movies)
 
+@app.route("/movies")
+def movies():
+    return "<h1>Movies Page</h1>"
+
+@app.route("/favourites")
+def favourites():
+    return "<h1>Favourites Page</h1>"
+
+@app.route("/about")
+def about():
+    return "<h1>About Page</h1>"
+
 if __name__ == "__main__":
     app.run(debug=True)
