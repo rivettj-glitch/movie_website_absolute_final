@@ -106,9 +106,12 @@ h2 {
 
 
 .movie-poster {
+    height: 330px;
+    overflow: hidden;
+}
+
+.movie-poster img {
     width: 100%;
-    background-color: #2a2828;
-    height: 250px;
-    color: #ffffff;
-    text-align: center;
+    height: 100%;
+    object-fit:cover;
 }

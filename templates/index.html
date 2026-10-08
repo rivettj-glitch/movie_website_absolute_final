@@ -26,14 +26,14 @@
 
     <h2>Best Sellers</h2>
     <div class="movie-grid">
-    {% for movie in movies %}
+    {% for best_seller in best_sellers %}
         <div class="movie">
             <div class="movie-poster">
-                Poster Placeholder
+                <img src="{{ url_for('poster', movie_id=best_seller[0]) }}" alt="{{ best_seller[1] }}">
             </div>
-            <h2>{{ movie[0] }}</h2>
-            <p>{{ movie[1] }} | {{ movie[2] }} mins | {{ movie[3] }}</p>
-            <h3>${{ movie[4] }}</h3>
+            <h2>{{ best_seller[1] }}</h2>
+            <p>{{ best_seller[2] }} | {{ best_seller[3] }} mins | {{ best_seller[4] }}</p>
+            <h3>${{ best_seller[5] }}</h3>
         </div>
         {% endfor %}
     </div>
