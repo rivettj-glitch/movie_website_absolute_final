@@ -55,10 +55,12 @@ nav {
 h2 {
     font-size: 24px;
     color: #111111;
-    margin: 30px auto;
+    margin: 20px auto;
     max-width: 1200px;
     width: 90%;
 }
+
+
 
 .movie-grid {
     display: grid;
@@ -101,7 +103,7 @@ h2 {
     margin: 12px 5px;
     font-size: 17px;
     text-align: left;
-    color: #c62828
+    color: #be0e0e;
 }
 
 
@@ -114,4 +116,51 @@ h2 {
     width: 100%;
     height: 100%;
     object-fit:cover;
+}
+
+
+
+.search-form {
+    text-align: right;
+    margin: 30px auto;
+    max-width: 1200px;
+    width: 90%;
+}
+
+.search-form input {
+    padding: 6px;
+    width: 180px;
+    border: 1px solid lightgray;
+    border-radius: 7px;
+}
+
+.search-form button {
+    padding: 6px 10px;
+    background-color: #b30e0e;
+    color: white;
+    border: 0;
+    border-radius: 7px;
+    cursor:pointer;
+}
+
+.view-all {
+    padding: 10px 8px;
+    background-color: #b30e0e;
+    color: white;
+    border-radius: 7px;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.movie-controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px auto;
+    width: 95%;
+    max-width: 1200px;
+    align-items: center;
+}
+
+html {
+    overflow-y: scroll;
 }

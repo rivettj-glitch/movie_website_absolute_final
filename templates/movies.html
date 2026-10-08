@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Movie Scout</div>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/favourites">Favourites</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+
+    <div class="movie-controls">
+        <a href="/movies" class="view-all">View All Movies</a>
+
+        <form method="GET" action="/movies" class="search-form">
+            <input type="text" name="search" placeholder="Search for a movie...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    
+    <h2>Movies</h2>
+    {% if movies %}
+        <div class="movie-grid">
+        {% for movie in movies %}
+            <div class="movie">
+                <div class="movie-poster">
+                    <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+                </div>
+                <h2>{{ movie[1] }}</h2>
+                <p>{{ movie[2] }} | {{ movie[3] }} mins | {{ movie[4] }}</p>
+                <h3>${{ movie[5] }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No movies found. Try searching for another movie!</p>
+    {% endif %}
+</body>
+</html>
