@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #efebeb;
-    color: #141414;
+    color: #111111;
     margin: 0;
     padding: 0;
 }
@@ -17,8 +17,8 @@ h1 {
 p {
     text-align:center;
     margin: 16px auto;
-    line-height: 1.6S;
-    width: 800px;
+    line-height: 1.6;
+    max-width: 800px;
 }
 
 nav {
@@ -50,4 +50,65 @@ nav {
 .links a:hover {
     text-decoration: underline;
     color: #c24c20;
+}
+
+h2 {
+    font-size: 24px;
+    color: #111111;
+    margin: 30px auto;
+    max-width: 1200px;
+    width: 90%;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin: 30px auto;
+    max-width: 1200px;
+    width: 90%;
+}
+
+.movie {
+    border-radius: 7px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie:hover {
+    transform: translatey(-5px);
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie h2 {
+    margin: 0 0 6px 0;
+    padding: 5px;
+    font-size: 18px;
+    color: #111111;
+
+}
+
+.movie p {
+    margin: 6px 5px;
+    font-size: 13px;
+    text-align: left;
+    color: #3d3d3d;
+}
+
+.movie h3 {
+    margin: 12px 5px;
+    font-size: 17px;
+    text-align: left;
+    color: #c62828
+}
+
+
+.movie-poster {
+    width: 100%;
+    background-color: #2a2828;
+    height: 250px;
+    color: #ffffff;
+    text-align: center;
 }

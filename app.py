@@ -8,8 +8,9 @@ def home():
     db = sqlite3.connect("movie_website.db")
     cursor = db.cursor()
     sql = """
-        SELECT movie_id, movie_name, release_year, length, age_rating, cost, bestseller
-        FROM movies"""
+        SELECT movie_name, release_year, length, age_rating, cost
+        FROM movies
+        WHERE bestseller = 1"""
     cursor.execute(sql)
     movies = cursor.fetchall()
     db.close()
