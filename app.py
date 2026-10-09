@@ -22,19 +22,49 @@ def movies():
     cursor = db.cursor()
 
     search = request.args.get("search")
+    sort = request.args.get("sort")
+
+    sql = """
+        SELECT movie_id, movie_name, release_year, length, age_rating, cost
+        FROM movies"""
+    filters= ()
     if search:
+        sql += " WHERE movie_name LIKE ?"
+        filters = ("%" + search + "%",)
+
+    sort_options = [("price_asc", "cost ASC"), 
+                    ("price_desc", "cost DESC"),
+                    ("name_asc", "movie_name ASC"),
+                    ("name_desc", "movie_name DESC"),
+                    ("year_desc", "release_year DESC"),
+                    ("year_asc", "release_year ASC"),
+                    ("length_asc", "length ASC"),
+                    ("length_desc", "length DESC")]
+
+    for option, sorter in sort_options:
+        if sort == option:
+            sql += " ORDER BY " + sorter
+
+    if sort == "rating_desc" or sort == "rating_asc" or sort == "best_sellers":
         sql = """
-            SELECT movie_id, movie_name, release_year, length, age_rating, cost
+            SELECT movies.movie_id, movies.movie_name,
+                   movies.release_year, movies.length,
+                   movies.age_rating, movies.cost
             FROM movies
-            WHERE movie_name LIKE ?"""
-        cursor.execute(sql, ("%" + search + "%",))
-        movies = cursor.fetchall()
-    else:
-        sql = """
-            SELECT movie_id, movie_name, release_year, length, age_rating, cost
-            FROM movies"""
-        cursor.execute(sql)
-        movies = cursor.fetchall()
+            JOIN rating_reviewers ON movies.movie_id = rating_reviewers.movie_id
+        """
+        if search:
+            sql += " WHERE movies.movie_name LIKE ?"
+        sql += " GROUP BY movies.movie_id"
+        if sort == "rating_desc":
+            sql += " ORDER BY AVG(rating_reviewers.percentage_rating) DESC"
+        elif sort == "rating_asc":
+            sql += " ORDER BY AVG(rating_reviewers.percentage_rating) ASC"
+        else:
+            sql += " ORDER BY movies.bestseller DESC, AVG(rating_reviewers.percentage_rating) DESC"
+    
+    cursor.execute(sql, filters)
+    movies = cursor.fetchall()
     db.close()
     return render_template("movies.html", movies=movies)
 

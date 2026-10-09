@@ -25,6 +25,27 @@
         </form>
     </div>
     
+    <form method="GET" action="/movies" class="sort-by">
+        <input type="hidden" name="search" value="{{request.args.get('search','')}}">
+        <label for="sort">Sort By:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="">Default</option>
+            <option value="price_asc" {% if request.args.get('sort') == 'price_asc' %} Selected{% endif %}>Price: Low to High</option>
+            <option value="price_desc" {% if request.args.get('sort') == 'price_desc' %} Selected{% endif %}>Price: High to Low</option>
+            <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %} Selected{% endif %}>Name: A-Z</option>
+            <option value="name_desc" {% if request.args.get('sort') == 'name_desc' %} Selected{% endif %}>Name: Z-A</option>
+            <option value="rating_desc" {% if request.args.get('sort') == 'rating_desc' %} Selected{% endif %}>Top Rated</option>
+            <option value="rating_asc" {% if request.args.get('sort') == 'rating_asc' %} Selected{% endif %}>Lowest Rated</option>
+            <option value="year_desc" {% if request.args.get('sort') == 'year_desc' %} Selected{% endif %}>Newest</option>
+            <option value="year_asc" {% if request.args.get('sort') == 'year_asc' %} Selected{% endif %}>Oldest</option>
+            <option value="length_asc" {% if request.args.get('sort') == 'length_asc' %} Selected{% endif %}>Length: Short to Long</option>
+            <option value="length_desc" {% if request.args.get('sort') == 'length_desc' %} Selected{% endif %}>Length: Long to Short</option>
+            <option value="best_sellers" {% if request.args.get('sort') == 'best_sellers' %} Selected{% endif %}>Best Selling</option>
+        </select>
+    </form>
+
+    
+
     <h2>Movies</h2>
     {% if movies %}
         <div class="movie-grid">
