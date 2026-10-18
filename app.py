@@ -21,8 +21,31 @@ def movies():
     db = sqlite3.connect("movie_website.db")
     cursor = db.cursor()
 
-    search = request.args.get("search")
+    search = request.args.get("search", "")
     sort = request.args.get("sort")
+    
+    age_ratings = []
+    sql = """
+        SELECT DISTINCT age_rating 
+        FROM movies
+        ORDER BY age_rating ASC;"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for rating in results:
+        age_ratings.append(rating[0])
+
+    genres = []
+    sql = """
+        SELECT genre_name
+        FROM genres
+        ORDER BY genre_name ASC;"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    for genre in results:
+        genres.append(genre[0])
+
+    selected_age_ratings = request.args.getlist("age_rating")
+    selected_genres = request.args.getlist("genre")
 
     sql = """
         SELECT movie_id, movie_name, release_year, length, age_rating, cost
@@ -31,6 +54,36 @@ def movies():
     if search:
         sql += " WHERE movie_name LIKE ?"
         filters = ("%" + search + "%",)
+
+    if selected_age_ratings:
+        if search:
+            sql += " AND movies.age_rating IN ("
+        else:
+            sql += " WHERE movies.age_rating IN ("
+        for rating in selected_age_ratings:
+            sql += "?,"
+
+        sql = sql[:-1]
+        sql += ")"
+        filters = filters + tuple(selected_age_ratings)
+
+    if selected_genres:
+        if search or selected_age_ratings:
+            sql += " AND movies.movie_id IN ("
+        else:
+            sql += " WHERE movies.movie_id IN ("
+
+        sql += """
+            SELECT movie_id
+            FROM movie_genres
+            JOIN genres ON movie_genres.genre_id=genres.genre_id
+            WHERE genre_name IN (
+            """
+        for genre in selected_genres:
+            sql += "?,"
+        sql = sql[:-1]
+        sql += "))"
+        filters = filters + tuple(selected_genres)
 
     sort_options = [("price_asc", "cost ASC"), 
                     ("price_desc", "cost DESC"),
@@ -53,8 +106,42 @@ def movies():
             FROM movies
             JOIN rating_reviewers ON movies.movie_id = rating_reviewers.movie_id
         """
+        filters =()
+
         if search:
             sql += " WHERE movies.movie_name LIKE ?"
+            filters = filters + ("%" + search + "%",)
+        if selected_age_ratings:
+            if search:
+                sql += " AND age_rating IN ("
+            else:
+                sql += " WHERE age_rating IN ("
+            for rating in selected_age_ratings:
+                sql += "?,"
+            
+            sql = sql[:-1]
+            sql += ")"
+            filters = filters + tuple(selected_age_ratings)
+
+        if selected_genres:
+                if search or selected_age_ratings:
+                    sql += " AND movies.movie_id IN ("
+                else:
+                    sql += " WHERE movies.movie_id IN ("
+        
+                sql += """
+                    SELECT movie_id
+                    FROM movie_genres
+                    JOIN genres ON movie_genres.genre_id=genres.genre_id
+                    WHERE genre_name IN (
+                    """
+                for genre in selected_genres:
+                    sql += "?,"
+                sql = sql[:-1]
+                sql += "))"
+                filters = filters + tuple(selected_genres)
+
+            
         sql += " GROUP BY movies.movie_id"
         if sort == "rating_desc":
             sql += " ORDER BY AVG(rating_reviewers.percentage_rating) DESC"
@@ -66,7 +153,7 @@ def movies():
     cursor.execute(sql, filters)
     movies = cursor.fetchall()
     db.close()
-    return render_template("movies.html", movies=movies)
+    return render_template("movies.html", movies=movies, age_ratings=age_ratings, genres=genres)
 
 @app.route("/favourites")
 def favourites():
@@ -88,6 +175,7 @@ def poster(movie_id):
     poster_data = cursor.fetchone()
     db.close()
     return Response(poster_data[0], mimetype="image/jpeg")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

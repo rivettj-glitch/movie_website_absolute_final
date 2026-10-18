@@ -3,6 +3,7 @@
 <head>
     <title>Movie Scout</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://kit.fontawesome.com/87a16f5de6.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -25,26 +26,77 @@
         </form>
     </div>
     
-    <form method="GET" action="/movies" class="sort-by">
-        <input type="hidden" name="search" value="{{request.args.get('search','')}}">
-        <label for="sort">Sort By:</label>
-        <select name="sort" id="sort" onchange="this.form.submit()">
-            <option value="">Default</option>
-            <option value="price_asc" {% if request.args.get('sort') == 'price_asc' %} Selected{% endif %}>Price: Low to High</option>
-            <option value="price_desc" {% if request.args.get('sort') == 'price_desc' %} Selected{% endif %}>Price: High to Low</option>
-            <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %} Selected{% endif %}>Name: A-Z</option>
-            <option value="name_desc" {% if request.args.get('sort') == 'name_desc' %} Selected{% endif %}>Name: Z-A</option>
-            <option value="rating_desc" {% if request.args.get('sort') == 'rating_desc' %} Selected{% endif %}>Top Rated</option>
-            <option value="rating_asc" {% if request.args.get('sort') == 'rating_asc' %} Selected{% endif %}>Lowest Rated</option>
-            <option value="year_desc" {% if request.args.get('sort') == 'year_desc' %} Selected{% endif %}>Newest</option>
-            <option value="year_asc" {% if request.args.get('sort') == 'year_asc' %} Selected{% endif %}>Oldest</option>
-            <option value="length_asc" {% if request.args.get('sort') == 'length_asc' %} Selected{% endif %}>Length: Short to Long</option>
-            <option value="length_desc" {% if request.args.get('sort') == 'length_desc' %} Selected{% endif %}>Length: Long to Short</option>
-            <option value="best_sellers" {% if request.args.get('sort') == 'best_sellers' %} Selected{% endif %}>Best Selling</option>
-        </select>
-    </form>
+    <div class="filter-sort">
+        <details class="filters-popup">
+            <summary class="filters-button">
+            <i class="fa-solid fa-filter"></i> Filters
+            </summary>
 
-    
+       <div class="filters-container">
+            <h4>Filter Movies</h4>
+            <p>Select the criteria for the movies you want to see</p>
+            <form method="GET" action="/movies">
+                <input type="hidden" name="search" value="{{request.args.get('search', '')}}">
+                <details class="filter-dropdown">
+                    <summary><i class="fa-regular fa-square-caret-down"></i> Age Rating</summary>
+                    {% for age_rating in age_ratings %}
+                        <label>
+                            <input type="checkbox" name="age_rating" value="{{age_rating}}" {% if age_rating in request.args.getlist('age_rating') %} checked {% endif %}>
+                            {{age_rating}}
+                        </label>
+                    {% endfor %}
+                </details>
+
+                <details class="filter-dropdown">
+                    <summary><i class="fa-regular fa-square-caret-down"></i>Genres</summary>
+                    {% for genre in genres %}
+                        <label>
+                            <input type="checkbox" name="genre" value="{{genre}}" {% if genre in request.args.getlist('genre') %} checked {% endif %}>
+                            {{genre}}
+                        </label>
+                    {% endfor %}
+                </details>
+
+            <button type="submit" class="apply-button">
+                Apply Filters
+            </button>
+
+            <a href="/movies" class="clear-filters">
+                Reset Filters
+            </a>
+
+            </form>
+       </div>
+       </details>
+
+
+        <form method="GET" action="/movies" class="sort-by">
+            <input type="hidden" name="search" value="{{request.args.get('search', '')}}">
+            {% for age_rating in request.args.getlist('age_rating') %}
+                <input type="hidden" name="age_rating" value="{{age_rating}}">
+            {% endfor %}
+
+            {% for genre in request.args.getlist('genre') %}
+                <input type="hidden" name="genre" value="{{genre}}">
+            {% endfor %}
+
+            <label for="sort">Sort By:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="">Default</option>
+                <option value="price_asc" {% if request.args.get('sort') == 'price_asc' %} Selected{% endif %}>Price: Low to High</option>
+                <option value="price_desc" {% if request.args.get('sort') == 'price_desc' %} Selected{% endif %}>Price: High to Low</option>
+                <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %} Selected{% endif %}>Name: A-Z</option>
+                <option value="name_desc" {% if request.args.get('sort') == 'name_desc' %} Selected{% endif %}>Name: Z-A</option>
+                <option value="rating_desc" {% if request.args.get('sort') == 'rating_desc' %} Selected{% endif %}>Top Rated</option>
+                <option value="rating_asc" {% if request.args.get('sort') == 'rating_asc' %} Selected{% endif %}>Lowest Rated</option>
+                <option value="year_desc" {% if request.args.get('sort') == 'year_desc' %} Selected{% endif %}>Newest</option>
+                <option value="year_asc" {% if request.args.get('sort') == 'year_asc' %} Selected{% endif %}>Oldest</option>
+                <option value="length_asc" {% if request.args.get('sort') == 'length_asc' %} Selected{% endif %}>Length: Short to Long</option>
+                <option value="length_desc" {% if request.args.get('sort') == 'length_desc' %} Selected{% endif %}>Length: Long to Short</option>
+                <option value="best_sellers" {% if request.args.get('sort') == 'best_sellers' %} Selected{% endif %}>Best Selling</option>
+            </select>
+        </form>
+    </div>
 
     <h2>Movies</h2>
     {% if movies %}

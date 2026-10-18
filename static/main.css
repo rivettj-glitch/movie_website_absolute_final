@@ -103,7 +103,7 @@ h2 {
     margin: 12px 5px;
     font-size: 17px;
     text-align: left;
-    color: #be0e0e;
+    color: #b30e0e;
 }
 
 
@@ -166,19 +166,6 @@ html {
 }
 
 
-.sort-by {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 12px 15px;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
-}
 
 .sort-by label {
     font-weight: bold;
@@ -201,4 +188,105 @@ html {
 .sort-by select:focus {
     border-color: #b30e0e;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.filter-sort {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 12px 15px;
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filters-button {
+    padding: 9px 12px;
+    border: 3px solid #b30e0e;
+    border-radius: 7px;
+    background-color: #efebeb;
+    color: #111111;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.filters-button:hover {
+    background-color: #b30e0e;
+}
+
+.filters-container {
+    background-color: #efebeb;
+    padding: 8px;
+    margin-top: 10px;
+    border: 2px solid #b30e0e;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 2px 8px auto;
+}
+
+.filter-dropdown {
+    border: 1px solid lightgray;
+    border-radius: 7px;
+    padding: 10px;
+}
+
+.filter-dropdown summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: bold;
+}
+
+.filter-dropdown label {
+    display:block;
+}
+
+.apply-button {
+    padding: 10px;
+    background-color: #b30e0e;
+    color: white;
+    border: 0;
+    border-radius: 7px;
+    cursor:pointer;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.apply-button:hover {
+    background-color: #c24c20;
+}
+
+.clear-filters {
+    padding: 8px;
+    background-color: white;
+    color: #b30e0e;
+    border: 0;
+    border-radius: 7px;
+    cursor:pointer;
+    margin-top: 10px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+}
+
+.clear-filters:hover {
+    text-decoration: underline;
+}
+
+.filter-dropdown input[type="checkbox"] {
+    accent-color: #b30e0e;
+    cursor: pointer;
 }
