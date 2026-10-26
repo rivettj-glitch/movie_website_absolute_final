@@ -28,6 +28,7 @@ nav {
     padding: 20px 40px;
     display: flex;
     justify-content:space-between;
+    margin-bottom: 25px;
 }
 
 .logo {
@@ -144,7 +145,7 @@ h2 {
 }
 
 .view-all {
-    padding: 10px 8px;
+    padding: 10px 5.1px;
     background-color: #b30e0e;
     color: white;
     border-radius: 7px;
@@ -289,4 +290,112 @@ h4 {
 .filter-dropdown input[type="checkbox"] {
     accent-color: #b30e0e;
     cursor: pointer;
+}
+
+.movie-link {
+    text-decoration: none;
+}
+
+.movie-page {
+    display: flex;
+    gap: 30px;
+    width: 95%;
+    margin: 25px 0;
+}
+
+.movie-details-poster {
+    width: 400px;
+    margin-left: 30px;
+}
+
+.movie-details-poster img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-width: 0;
+    flex: 1;
+    align-self: start;
+}
+
+.movie-info,
+.movie-reviews {
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #b30e0e;
+    border-radius: 8px;
+    min-width: 250px;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.movie-info h1,
+.movie-reviews h2 {
+    color: #b30e0e;
+    margin-top: 0;
+    text-align: center;
+}
+
+.movie-info p {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.review {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.review p {
+    margin: 0;
+}
+
+
+.movie-comments {
+    margin-top: 12px;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #b30e0e;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.movie-comments h2 {
+    color: #b30e0e;
+    margin-top: 0;
+}
+
+.comment {
+    padding: 12px 15px;
+    margin: 12px 0;
+    background-color: #efebeb;
+    border-radius: 8px;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.return-link {
+    padding: 10px 8px;
+    background-color: #b30e0e;
+    color: white;
+    border-radius: 7px;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: right;
+    margin: 30px;
+    max-width: 1200px;
+    width: 90%;
 }

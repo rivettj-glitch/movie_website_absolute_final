@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">Movie Scout</div>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/favourites">Favourites</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+
+    <a href="/movies" class="return-link">Back to Movies</a>
+
+    <div class="movie-page">
+        <div class="movie-details-poster">
+            <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+        </div>
+        <div class="movie-details">
+            <div class="movie-info">
+                <h1>{{ movie[1] }}</h1>
+                <p><strong>Release Year:</strong> {{ movie[2] }}</p>
+                <p><strong>Length:</strong> {{ movie[3] }} minutes</p>
+                <p><strong>Age Rating:</strong> {{ movie[4] }}</p>
+                <p><strong>Price:</strong> ${{ movie[5] }}</p>
+            </div>
+            <div class="movie-reviews">
+                <h2>Reviews</h2>
+                {% for review in reviews %}
+                    <div class="review">
+                        <p><strong>Reviewer:</strong> {{review[0]}}</p>
+                        <p><strong>Rating:</strong> {{review[1]}}</p>
+                    </div>
+                    {% endfor %}
+            </div>
+            
+            <div class="movie-comments">
+                <h2>Comments</h2>
+                {% for comment in comments %}
+                    <div class="comment">
+                        <p>{{comment[0]}}</p>
+                    </div>
+                    {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

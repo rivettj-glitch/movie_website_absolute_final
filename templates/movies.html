@@ -102,14 +102,17 @@
     {% if movies %}
         <div class="movie-grid">
         {% for movie in movies %}
-            <div class="movie">
-                <div class="movie-poster">
-                    <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+            <a href="{{url_for('movie_details', movie_id=movie[0])}}" class="movie-link">
+                <div class="movie">
+                    <div class="movie-poster">
+                        <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+                    </div>
+                    <h2>{{ movie[1] }}</h2>
+                    <p>{{ movie[2] }} | {{ movie[3] }} mins | {{ movie[4] }}</p>
+                    <h3>${{ movie[5] }}</h3>
                 </div>
-                <h2>{{ movie[1] }}</h2>
-                <p>{{ movie[2] }} | {{ movie[3] }} mins | {{ movie[4] }}</p>
-                <h3>${{ movie[5] }}</h3>
-            </div>
+            </a>
+            
             {% endfor %}
         </div>
     {% else %}

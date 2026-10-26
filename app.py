@@ -155,6 +155,35 @@ def movies():
     db.close()
     return render_template("movies.html", movies=movies, age_ratings=age_ratings, genres=genres)
 
+@app.route("/movie/<int:movie_id>")
+def movie_details(movie_id):
+    db = sqlite3.connect("movie_website.db")
+    cursor = db.cursor()
+    sql = """
+        SELECT movie_id, movie_name, release_year, length, age_rating, cost
+        FROM movies
+        WHERE movie_id = ?"""
+    cursor.execute(sql, (movie_id,))
+    movie = cursor.fetchone()
+
+    sql = """
+        SELECT comment
+        FROM comments
+        WHERE movie_id = ?"""
+    cursor.execute(sql, (movie_id,))
+    comments = cursor.fetchall()
+
+    sql = """
+        SELECT reviewers.reviewer_name, rating_reviewers.percentage_rating
+        FROM rating_reviewers
+        JOIN reviewers ON rating_reviewers.reviewer_id=reviewers.reviewer_id
+        WHERE rating_reviewers.movie_id = ?"""
+    cursor.execute(sql, (movie_id,))
+    reviews = cursor.fetchall()
+    db.close()
+    return render_template("movie_details.html", movie=movie, comments=comments, reviews=reviews)
+
+
 @app.route("/favourites")
 def favourites():
     return "<h1>Favourites Page</h1>"
