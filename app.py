@@ -1,7 +1,14 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
+
+
+db = sqlite3.connect("movie_website.db")
+cursor = db.cursor()
+cursor.execute("DELETE FROM comments WHERE comment_id > 90")
+db.commit()
+db.close()
 
 @app.route("/")
 def home():
@@ -155,10 +162,22 @@ def movies():
     db.close()
     return render_template("movies.html", movies=movies, age_ratings=age_ratings, genres=genres)
 
-@app.route("/movie/<int:movie_id>")
+@app.route("/movie/<int:movie_id>", methods=["GET", "POST"])
 def movie_details(movie_id):
     db = sqlite3.connect("movie_website.db")
     cursor = db.cursor()
+
+    if request.method == "POST":
+        comment = request.form.get("comment")
+        if comment:
+            sql = """
+                INSERT INTO comments (comment, movie_id)
+                VALUES (?, ?)"""
+            cursor.execute(sql, (comment, movie_id))
+            db.commit()
+        db.close()
+        return redirect(url_for("movie_details", movie_id=movie_id))
+
     sql = """
         SELECT movie_id, movie_name, release_year, length, age_rating, cost
         FROM movies

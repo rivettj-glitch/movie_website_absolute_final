@@ -376,14 +376,14 @@ h4 {
     margin-top: 0;
 }
 
-.comment {
+.comments {
     padding: 12px 15px;
     margin: 12px 0;
     background-color: #efebeb;
     border-radius: 8px;
 }
 
-.comment p {
+.comments p {
     margin: 0;
 }
 
@@ -398,4 +398,26 @@ h4 {
     margin: 30px;
     max-width: 1200px;
     width: 90%;
+}
+
+.add-comment textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    resize:vertical;
+}
+
+.add-comment button {
+    padding: 8px 8px;
+    background-color: #b30e0e;
+    color: white;
+    border-radius: 7px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-comment button:hover {
+    background-color: #c24c20;
 }

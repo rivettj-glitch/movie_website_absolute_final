@@ -43,14 +43,18 @@
             <div class="movie-comments">
                 <h2>Comments</h2>
                 {% for comment in comments %}
-                    <div class="comment">
+                    <div class="comments">
                         <p>{{comment[0]}}</p>
                     </div>
                     {% endfor %}
+                <div class="add-comment">
+                    <form action="{{url_for('movie_details', movie_id=movie[0])}}" method="POST">
+                        <textarea id="comment" name="comment" placeholder="Add your own comment here..." required></textarea>
+                        <button type="submit">Submit Comment</button> 
+                    </form>
+                </div>
             </div>
         </div>
-        
     </div>
-    
 </body>
 </html>
