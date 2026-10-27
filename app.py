@@ -3,6 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 
+favourites = []
 
 db = sqlite3.connect("movie_website.db")
 cursor = db.cursor()
@@ -21,7 +22,7 @@ def home():
     cursor.execute(sql)
     best_sellers = cursor.fetchall()
     db.close()
-    return render_template("index.html", best_sellers=best_sellers)
+    return render_template("index.html", best_sellers=best_sellers, favourites=favourites)
 
 @app.route("/movies")
 def movies():
@@ -160,7 +161,7 @@ def movies():
     cursor.execute(sql, filters)
     movies = cursor.fetchall()
     db.close()
-    return render_template("movies.html", movies=movies, age_ratings=age_ratings, genres=genres)
+    return render_template("movies.html", movies=movies, age_ratings=age_ratings, genres=genres, favourites=favourites)
 
 @app.route("/movie/<int:movie_id>", methods=["GET", "POST"])
 def movie_details(movie_id):
@@ -168,13 +169,19 @@ def movie_details(movie_id):
     cursor = db.cursor()
 
     if request.method == "POST":
-        comment = request.form.get("comment")
-        if comment:
-            sql = """
-                INSERT INTO comments (comment, movie_id)
-                VALUES (?, ?)"""
-            cursor.execute(sql, (comment, movie_id))
-            db.commit()
+        if "favourite" in request.form:
+            if movie_id in favourites:
+                favourites.remove(movie_id)
+            else:
+                favourites.append(movie_id)
+        else:
+            comment = request.form.get("comment")
+            if comment:
+                sql = """
+                    INSERT INTO comments (comment, movie_id)
+                    VALUES (?, ?)"""
+                cursor.execute(sql, (comment, movie_id))
+                db.commit()
         db.close()
         return redirect(url_for("movie_details", movie_id=movie_id))
 
@@ -200,12 +207,26 @@ def movie_details(movie_id):
     cursor.execute(sql, (movie_id,))
     reviews = cursor.fetchall()
     db.close()
-    return render_template("movie_details.html", movie=movie, comments=comments, reviews=reviews)
+    return render_template("movie_details.html", movie=movie, comments=comments, reviews=reviews, favourites=favourites)
 
 
-@app.route("/favourites")
-def favourites():
-    return "<h1>Favourites Page</h1>"
+@app.route("/favourite_movies")
+def favourite_movies():
+    db = sqlite3.connect("movie_website.db")
+    cursor = db.cursor()
+    favourites_movie_list = []
+    for movie_id in favourites:
+        sql = """
+            SELECT movie_id, movie_name, release_year, length, age_rating, cost
+            FROM movies
+            WHERE movie_id = ?"""
+        cursor.execute(sql, (movie_id,))
+        movie = cursor.fetchone()
+        if movie:
+            favourites_movie_list.append(movie)
+    db.close()
+    return render_template("favourites.html", movies=favourites_movie_list)
+
 
 @app.route("/about")
 def about():

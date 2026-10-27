@@ -12,7 +12,7 @@
         <div class="links">
             <a href="/">Home</a>
             <a href="/movies">Movies</a>
-            <a href="/favourites">Favourites</a>
+            <a href="/favourite_movies">Favourites</a>
             <a href="/about">About</a>
         </div>
     </nav>
@@ -106,6 +106,13 @@
                 <div class="movie">
                     <div class="movie-poster">
                         <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+                        <form method="POST" action="{{url_for('movie_details', movie_id=movie[0])}}">
+                            {% if movie[0] in favourites %}
+                                <button type="submit" name="favourite" class="favourites-button"><i class="fa-solid fa-heart"></i></button>
+                            {% else %}
+                                <button type="submit" name="favourite" class="favourites-button"><i class="fa-regular fa-heart"></i></button>
+                            {% endif %}
+                        </form>
                     </div>
                     <h2>{{ movie[1] }}</h2>
                     <p>{{ movie[2] }} | {{ movie[3] }} mins | {{ movie[4] }}</p>

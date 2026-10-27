@@ -3,6 +3,7 @@
 <head>
     <title>Movie Scout</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://kit.fontawesome.com/87a16f5de6.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -11,7 +12,7 @@
         <div class="links">
             <a href="/">Home</a>
             <a href="/movies">Movies</a>
-            <a href="/favourites">Favourites</a>
+            <a href="/favourite_movies">Favourites</a>
             <a href="/about">About</a>
         </div>
     </nav>
@@ -31,6 +32,13 @@
             <div class="movie">
                 <div class="movie-poster">
                     <img src="{{ url_for('poster', movie_id=best_seller[0]) }}" alt="{{ best_seller[1] }}">
+                        <form method="POST" action="{{url_for('movie_details', movie_id=best_seller[0])}}">
+                            {% if best_seller[0] in favourites %}
+                                <button type="submit" name="favourite" class="favourites-button"><i class="fa-solid fa-heart"></i></button>
+                            {% else %}
+                                <button type="submit" name="favourite" class="favourites-button"><i class="fa-regular fa-heart"></i></button>
+                            {% endif %}
+                        </form>
                 </div>
                 <h2>{{ best_seller[1] }}</h2>
                 <p>{{ best_seller[2] }} | {{ best_seller[3] }} mins | {{ best_seller[4] }}</p>

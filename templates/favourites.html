@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">Movie Scout</div>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/favourite_movies">Favourites</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+    
+        <h1>My Favourite Movies</h1>
+        {% if movies %}
+            <div class="movie-grid">
+            {% for movie in movies %}
+                <a href="{{url_for('movie_details', movie_id=movie[0])}}" class="movie-link">
+                    <div class="movie">
+                        <div class="movie-poster">
+                            <img src="{{ url_for('poster', movie_id=movie[0]) }}" alt="{{ movie[1] }}">
+                        </div>
+                        <h2>{{ movie[1] }}</h2>
+                        <p>{{ movie[2] }} | {{ movie[3] }} mins | {{ movie[4] }}</p>
+                        <h3>${{ movie[5] }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You haven't favourited any movies yet. Click on the heart in the top right corner of a movie to favourite it!</p>
+        {% endif %}
