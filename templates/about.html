@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie Scout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://kit.fontawesome.com/87a16f5de6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">Movie Scout</div>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/favourite_movies">Favourites</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+
+    <h1>ABOUT MOVIE SCOUT</h1>
+    <div class="about-info">
+        <p>
+            Movie Scout is a website that helps users explore movies and find ones they would like to watch or rent. Browse different movies, compare their details and discover something new.
+        </p>
+        <div class="about">
+            <div class="about-features">
+                <div class="about-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h3>Explore Movies</h3>
+                <p>
+                    Search for movies, sort the results and use
+                    filters to find movies that suit you.
+                </p>
+            </div>
+
+            <div class="about-features">
+                <div class="about-icon"><i class="fa-solid fa-heart"></i></div>
+                <h3>Save Favourites</h3>
+                <p>
+                    Add movies to your favourites list so you can
+                    easily find them again later.
+                </p>
+            </div>
+
+            <div class="about-features">
+                <div class="about-icon"><i class="fa-solid fa-star"></i></div>
+                <h3>View Details</h3>
+                <p>
+                    Learn more about each movie, read reviewer
+                    ratings and see what other users have commented.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

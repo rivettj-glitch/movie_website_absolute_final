@@ -230,7 +230,7 @@ def favourite_movies():
 
 @app.route("/about")
 def about():
-    return "<h1>About Page</h1>"
+    return render_template("about.html")
 
 @app.route("/poster/<int:movie_id>")
 def poster(movie_id):
