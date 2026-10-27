@@ -24,8 +24,10 @@
 
     <p>Ready to scout your next watch?</p>
     
-
-    <h2>Best Sellers</h2>
+    <div class="home">
+        <h2>Best Sellers</h2>
+        <a href="/movies" class="view-all">View All Movies</a>
+    </div>
     <div class="movie-grid">
     {% for best_seller in best_sellers %}
         <a href="{{url_for('movie_details', movie_id=best_seller[0])}}" class="movie-link">

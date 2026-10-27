@@ -21,7 +21,7 @@
         <a href="/movies" class="view-all">View All Movies</a>
 
         <form method="GET" action="/movies" class="search-form">
-            <input type="text" name="search" placeholder="Search for a movie...">
+            <input type="text" name="search" placeholder="Search for a movie..." value="{{request.args.get('search', '')}}">
             <button type="submit">Search</button>
         </form>
     </div>
